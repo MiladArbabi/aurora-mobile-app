@@ -2,6 +2,18 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './db.js';
+import mongoose from "mongoose";
+
+const mongoURI = "mongodb://127.0.0.1:27017/auroraBabyDB"; 
+
+// Connect to MongoDB
+connectDB();
+
+mongoose
+  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("✅ MongoDB Connected Successfully"))
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
+
 
 dotenv.config();
 
@@ -10,9 +22,6 @@ const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(express.json());
-
-// Connect to MongoDB
-connectDB();
 
 // Test Route
 app.get('/', (req, res) => {
